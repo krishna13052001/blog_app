@@ -1,7 +1,7 @@
 package mycontext
 
 import (
-	"blog_app/constants"
+	"blog_app/env"
 	"github.com/golang-jwt/jwt/v5"
 	"time"
 )
@@ -13,7 +13,7 @@ type CustomClaims struct {
 	jwt.RegisteredClaims
 }
 
-var jwtKey = []byte(constants.JwtSecret)
+var jwtKey = []byte(env.GetEnv(New(), "JWT_SECRET"))
 
 func GenerateJWT(email, userID string) (string, error) {
 	claims := &CustomClaims{
