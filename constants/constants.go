@@ -11,6 +11,7 @@ var (
 	ServiceRoute   string
 	MongoHost      string
 	MongoHostAtlas string
+	JwtSecret      string
 )
 
 func LoadEnv(ctx mycontext.Context) {
@@ -19,4 +20,5 @@ func LoadEnv(ctx mycontext.Context) {
 	ServiceRoute = env.GetEnv(ctx, "SERVICE_ROUTE")
 	MongoHost = env.GetEnv(ctx, "MONGO_HOST")
 	MongoHostAtlas = env.GetEnv(ctx, "MONGO_ATLAS")
+	JwtSecret = env.GetEnv(ctx, "JWT_SECRET")
 }
