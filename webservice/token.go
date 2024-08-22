@@ -1,6 +1,7 @@
 package webservice
 
 import (
+	"blog_app/auth"
 	"blog_app/models"
 	"blog_app/mycontext"
 	"net/http"
@@ -18,7 +19,7 @@ func (s *WebService) createToken(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tokenValue string
-	tokenValue, err = mycontext.GenerateJWT(token.UserEmail, token.UserName)
+	tokenValue, err = auth.GenerateJWT(token.UserEmail, token.UserName)
 	if err != nil {
 		s.ReturnErrorResponse(ctx, w, "Failed to create token", http.StatusInternalServerError, err)
 		return

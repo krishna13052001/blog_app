@@ -1,6 +1,7 @@
 package server
 
 import (
+	"blog_app/auth"
 	"blog_app/log"
 	"blog_app/mycontext"
 	"bytes"
@@ -148,7 +149,7 @@ func validateToken(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		claims, err := mycontext.ValidateJWT(myCtx.ApiToken)
+		claims, err := auth.ValidateJWT(myCtx.ApiToken)
 		if err != nil || !claims.Valid {
 			http.Error(w, "Invalid or expired authorization token", http.StatusUnauthorized)
 			return
