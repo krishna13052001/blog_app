@@ -61,8 +61,11 @@ func (m *MongoServices) UpdateBlog(ctx mycontext.Context, blog models.Blog) erro
 	updateMap := bson.M{
 		"title":     blog.Title,
 		"body":      blog.Body,
+		"batch":     blog.Batch,
+		"jobType":   blog.JobType,
+		"payRange":  blog.PayRange,
+		"applyLink": blog.ApplyLink,
 		"updatedAt": blog.UpdatedAt,
-		"updatedBy": blog.UpdatedBy,
 	}
 	_, err := m.Db.Update(ctx, constants.BlogAppDatabase, constants.BlogCollection, bson.M{"_id": objectId}, bson.M{"$set": updateMap}, updateOptions)
 	if err != nil {
