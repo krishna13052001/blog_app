@@ -12,3 +12,9 @@ type IBlog interface {
 	DeleteBlog(ctx mycontext.Context, id string) error
 	UpdateBlog(ctx mycontext.Context, blog models.Blog) error
 }
+
+type IUser interface {
+	ValidateUser(ctx mycontext.Context, cred models.Credentials) (models.User, error)
+	UserExists(ctx mycontext.Context, email string) (bool, error)
+	RegisterUser(ctx mycontext.Context, user models.User) error
+}
