@@ -39,9 +39,8 @@ func (m *MongoServices) GetBlog(ctx mycontext.Context, start string) ([]models.B
 }
 
 func (m *MongoServices) GetBlogById(ctx mycontext.Context, id string) (models.Blog, error) {
-	objectId, _ := primitive.ObjectIDFromHex(id)
 	var blog models.Blog
-	err := m.Db.ReadOne(ctx, constants.BlogAppDatabase, constants.BlogCollection, bson.M{"_id": objectId}, &blog)
+	err := m.Db.ReadOne(ctx, constants.BlogAppDatabase, constants.BlogCollection, bson.M{"_id": id}, &blog)
 	if err != nil {
 		log.GenericError(ctx, errors.WithMessage(err, "Error while updating blog"), log.FieldsMap{"blog": blog})
 		return models.Blog{}, err
