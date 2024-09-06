@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"strconv"
 )
 
 func (m *MongoServices) CreateBlog(ctx mycontext.Context, blog models.Blog) error {
@@ -20,9 +21,16 @@ func (m *MongoServices) CreateBlog(ctx mycontext.Context, blog models.Blog) erro
 	return nil
 }
 
-func (m *MongoServices) GetBlog(ctx mycontext.Context) ([]models.Blog, error) {
+func (m *MongoServices) GetBlog(ctx mycontext.Context, start string) ([]models.Blog, error) {
 	var blogs []models.Blog
-	err := m.Db.ReadAll(ctx, constants.BlogAppDatabase, constants.BlogCollection, nil, &blogs)
+	findOptions := options.Find()
+	findOptions.SetLimit(15)
+	findOptions.SetSort(bson.D{{"updatedAt", -1}})
+	skipLimit, err := strconv.ParseInt(start, 10, 64)
+	if start != "" && err == nil {
+		findOptions.SetSkip(skipLimit)
+	}
+	err = m.Db.ReadAll(ctx, constants.BlogAppDatabase, constants.BlogCollection, nil, &blogs, findOptions)
 	if err != nil {
 		log.GenericError(ctx, errors.WithMessage(err, "Error while getting blog"), nil)
 		return nil, err

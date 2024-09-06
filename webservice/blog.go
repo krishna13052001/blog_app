@@ -31,8 +31,8 @@ func (s *WebService) createBlog(w http.ResponseWriter, r *http.Request) {
 
 func (s *WebService) getBlog(w http.ResponseWriter, r *http.Request) {
 	ctx := mycontext.UpgradeCtx(r.Context())
-
-	blogs, err := s.Domain.GetBlog(ctx)
+	start := mux.Vars(r)["start"]
+	blogs, err := s.Domain.GetBlog(ctx, start)
 
 	if err != nil {
 		s.ReturnErrorResponse(ctx, w, "Failed to get blog", http.StatusInternalServerError, err)

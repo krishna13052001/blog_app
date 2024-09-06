@@ -17,8 +17,8 @@ func (s *domainService) CreateBlog(ctx mycontext.Context, blog models.Blog) erro
 	return s.DB.CreateBlog(ctx, blog)
 }
 
-func (s *domainService) GetBlog(ctx mycontext.Context) ([]models.Blog, error) {
-	blogs, err := s.DB.GetBlog(ctx)
+func (s *domainService) GetBlog(ctx mycontext.Context, start string) ([]models.Blog, error) {
+	blogs, err := s.DB.GetBlog(ctx, start)
 	if err != nil {
 		log.GenericError(ctx, errors.New("error getting blog"), log.FieldsMap{"error": err.Error()})
 		return nil, err
