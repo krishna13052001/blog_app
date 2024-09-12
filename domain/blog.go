@@ -12,6 +12,7 @@ import (
 
 func (s *domainService) CreateBlog(ctx mycontext.Context, blog models.Blog) error {
 	blog.ID = uuid.New().String()
+	blog.CreatedAt = time.Now().UnixMilli()
 	blog.UpdatedAt = time.Now().UnixMilli()
 	log.GenericInfo(ctx, "Creating blog", log.FieldsMap{"blog": blog})
 	return s.DB.CreateBlog(ctx, blog)
@@ -50,6 +51,9 @@ func (s *domainService) DeleteBlog(ctx mycontext.Context, id string) error {
 }
 
 func (s *domainService) UpdateBlog(ctx mycontext.Context, blog models.Blog) error {
+	if blog.ID == "" {
+		return errors.New("invalid blog id")
+	}
 	blog.UpdatedAt = time.Now().UnixMilli()
 	err := s.DB.UpdateBlog(ctx, blog)
 	if err != nil {
