@@ -13,11 +13,14 @@ func (s *WebService) Start(ctx mycontext.Context) {
 func (s *WebService) registerRoutes() {
 	s.server.AddNoAuthRoute("ping request", "GET", "/ping", s.ping)
 	s.server.AddNoAuthRoute("create token", "POST", "/create-token", s.createToken)
-	s.server.AddBasicRoute("create blog", "POST", "/blog", s.createBlog)
+	//s.server.AddBasicRoute("create blog", "POST", "/blog", s.createBlog)
+	s.server.AddNoAuthRoute("create blog", "POST", "/blog", s.createBlog)
 	s.server.AddNoAuthRoute("Get blog", "GET", "/blog", s.getBlog)
 	s.server.AddNoAuthRoute("Get blog by id", "GET", "/blog/{id}", s.getBlogByID)
-	s.server.AddBasicRoute("Delete blog", "DELETE", "/blog/{id}", s.deleteBlog)
-	s.server.AddBasicRoute("Update blog", "PUT", "/blog", s.updateBlog)
+	s.server.AddNoAuthRoute("Delete blog", "DELETE", "/blog/{id}", s.deleteBlog)
+	//s.server.AddBasicRoute("Delete blog", "DELETE", "/blog/{id}", s.deleteBlog)
+	s.server.AddNoAuthRoute("Update blog", "PUT", "/blog", s.updateBlog)
+	//s.server.AddBasicRoute("Update blog", "PUT", "/blog", s.updateBlog)
 	//TODO:: add routes for login and register
 	s.server.AddNoAuthRoute("login", "POST", "/login", s.login)
 	s.server.AddNoAuthRoute("register", "POST", "/register", s.register)
