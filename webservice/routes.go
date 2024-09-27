@@ -14,7 +14,7 @@ func (s *WebService) registerRoutes() {
 	s.server.AddNoAuthRoute("ping request", "GET", "/ping", s.ping)
 	s.server.AddNoAuthRoute("create token", "POST", "/create-token", s.createToken)
 	//s.server.AddBasicRoute("create blog", "POST", "/blog", s.createBlog)
-	s.server.AddNoAuthRoute("create blog", "POST", "/blog", s.createBlog)
+	s.server.AddBasicRoute("create blog", "POST", "/blog", s.createBlog)
 	s.server.AddNoAuthRoute("Get blog", "GET", "/blog", s.getBlog)
 	s.server.AddNoAuthRoute("Get blog by id", "GET", "/blog/{id}", s.getBlogByID)
 	s.server.AddNoAuthRoute("Delete blog", "DELETE", "/blog/{id}", s.deleteBlog)
