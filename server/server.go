@@ -91,6 +91,7 @@ func enableCorsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 			w.WriteHeader(http.StatusOK)
 			return
 		}
+		fmt.Println("Passed the middleware")
 		next.ServeHTTP(w, r)
 	}
 }
