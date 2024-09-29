@@ -37,9 +37,7 @@ func (s *server) Start(ctx mycontext.Context) {
 		"X-Requested-With",
 		"timezone",
 		"email",
-		"api-token",
-		"gzip-compress",
-		"access_token",
+		"apitoken",
 		"application",
 		"username",
 	})
