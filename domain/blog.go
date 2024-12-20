@@ -7,6 +7,7 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+	"strings"
 	"time"
 )
 
@@ -24,6 +25,23 @@ func (s *domainService) GetBlog(ctx mycontext.Context, start string) ([]models.B
 		log.GenericError(ctx, errors.New("error getting blog"), log.FieldsMap{"error": err.Error()})
 		return nil, err
 	}
+	for idx, blog := range blogs {
+		blog.Batch = strings.Join(blog.BatchArray, ",")
+		blogs[idx] = blog
+	}
+	return blogs, nil
+}
+
+func (s *domainService) GetBlogsByFilter(ctx mycontext.Context, value string, typeVal int, start string) ([]models.Blog, error) {
+	blogs, err := s.DB.GetBlogsByFilter(ctx, value, typeVal, start)
+	if err != nil {
+		log.GenericError(ctx, errors.New("error getting blog"), log.FieldsMap{"error": err.Error()})
+		return nil, err
+	}
+	for idx, blog := range blogs {
+		blog.Batch = strings.Join(blog.BatchArray, ",")
+		blogs[idx] = blog
+	}
 	return blogs, nil
 }
 
@@ -38,6 +56,7 @@ func (s *domainService) GetBlogById(ctx mycontext.Context, id string) (models.Bl
 		log.GenericError(ctx, errors.New("error getting blog"), log.FieldsMap{"error": err.Error()})
 		return models.Blog{}, err
 	}
+	blog.Batch = strings.Join(blog.BatchArray, ",")
 	return blog, nil
 }
 

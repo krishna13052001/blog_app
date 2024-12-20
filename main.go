@@ -39,3 +39,73 @@ func main() {
 	}
 	log.GenericInfo(ctx, constants.ServiceName+"Server Stopped")
 }
+
+/*
+	// Define the ITestFramework interface
+	type ITestFramework interface {
+		Setup(t *testing.T) *TestFramework
+		Run(name string, test FrameworkTest) bool
+		CreateGateway(gateway Gateway) (map[string]any, error)
+		DeleteGateway(name string) (map[string]any, error)
+		API() *API
+		Ctx() context.Context
+		T() *testing.T
+	}
+
+	// Refactor TestFramework to implement ITestFramework
+	type TestFramework struct {
+		api *API
+		ctx context.Context
+		t *testing.T
+		controller  testcontainers.Container
+		gateway     testcontainers.Container
+		gwSimClient gatewaySimulator.SimulatorServiceClient
+	}
+
+	func (tf *TestFramework) API() *API {
+		return tf.api
+	}
+
+	func (tf *TestFramework) Ctx() context.Context {
+		return tf.ctx
+	}
+
+	func (tf *TestFramework) T() *testing.T {
+		return tf.t
+	}
+
+	func (tf *TestFramework) Setup(t *testing.T) *TestFramework {
+		tf.api = api
+		tf.ctx = logging.InitTestCtx(t)
+		tf.t = t
+		return tf
+	}
+
+	func TestFrameworkFactory(env string) ITestFramework {
+		switch env {
+		case "live":
+			return &LiveTestFramework{}
+		case "aviatrix_8.0":
+			return &Aviatrix80TestFramework{}
+		default:
+			return &TestFramework{}
+		}
+	}
+
+	type LiveTestFramework struct {
+		*TestFramework
+	}
+
+	func (ltf *LiveTestFramework) Setup(t *testing.T) *TestFramework {
+		return ltf.TestFramework.Setup(t)
+	}
+
+	type Aviatrix80TestFramework struct {
+		*TestFramework
+	}
+
+	func (atf *Aviatrix80TestFramework) Setup(t *testing.T) *TestFramework {
+		return atf.TestFramework.Setup(t)
+	}
+
+*/

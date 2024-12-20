@@ -93,7 +93,6 @@ func enableCorsMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 func enableLogging(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("enableLogging")
 		ctx := mycontext.UpgradeCtx(r.Context())
 		// Avoid logging ping API
 		rawBody, _ := ioutil.ReadAll(r.Body)

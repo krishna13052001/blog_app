@@ -24,6 +24,8 @@ func (s *WebService) registerRoutes() {
 	//TODO:: add routes for login and register
 	s.server.AddNoAuthRoute("login", "POST", "/login", s.login)
 	s.server.AddNoAuthRoute("register", "POST", "/register", s.register)
+	s.server.AddNoAuthRoute("Search location and batches", "GET", "/search", s.searchLocationAndBatches)
+
 }
 
 func (s *WebService) ping(w http.ResponseWriter, _ *http.Request) {

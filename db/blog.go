@@ -37,6 +37,33 @@ func (m *MongoServices) GetBlog(ctx mycontext.Context, start string) ([]models.B
 	return blogs, nil
 }
 
+func (m *MongoServices) GetBlogsByFilter(ctx mycontext.Context, value string, typeVal int, start string) ([]models.Blog, error) {
+	var blogs []models.Blog
+	var filter bson.M
+	switch typeVal {
+	case 1:
+		filter = bson.M{"location": value}
+	case 2:
+		filter = bson.M{"batchArray": bson.M{"$in": value}}
+	case 3:
+		filter = bson.M{"jobType": value}
+	}
+
+	findOptions := options.Find()
+	findOptions.SetLimit(15)
+	findOptions.SetSort(bson.D{{"createdAt", -1}})
+	skipLimit, err := strconv.ParseInt(start, 10, 64)
+	if start != "" && err == nil {
+		findOptions.SetSkip(skipLimit)
+	}
+	err = m.Db.ReadAll(ctx, constants.BlogAppDatabase, constants.BlogCollection, filter, &blogs, findOptions)
+	if err != nil {
+		log.GenericError(ctx, errors.WithMessage(err, "Error while getting blog"), log.FieldsMap{"filter": filter})
+		return nil, err
+	}
+	return blogs, nil
+}
+
 func (m *MongoServices) GetBlogById(ctx mycontext.Context, id string) (models.Blog, error) {
 	var blog models.Blog
 	err := m.Db.ReadOne(ctx, constants.BlogAppDatabase, constants.BlogCollection, bson.M{"_id": id}, &blog)
